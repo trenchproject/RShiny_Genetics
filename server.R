@@ -20,7 +20,11 @@ beetles$MeanLTL <- (beetles$LTL14.5 + beetles$LTL20.5) / 2
 beetles <- beetles[-1, ]
 habitats <- c("t" = "Terrestrial", "sw" = "Marine", "fw" = "Freshwater")
 
-xtitle <- c("Upper thermal limit (°C)" = "MaxCtmax", "Lower thermal limit (°C)" = "MinCtmin", "Seasonality (°C)" = "Seasonality", "Latitude (°)" = "Latitude")
+xtitle <- c("Upper thermal limit (°C)" = "MaxCtmax", 
+            "Lower thermal limit (°C)" = "MinCtmin",
+            "Thermal tolerance range (°C)" = "TTR",
+            "Seasonality (°C)" = "Seasonality", 
+            "Latitude (°)" = "Latitude")
 
 ytitle <- c("Delta upper thermal limit (°C)" = "CtmaxARR", 
             "Delta lower thermal limit (°C)" = "CtminARR", 
@@ -54,13 +58,14 @@ shinyServer <- function(input, output, session) {
       need(input$hypothesis, "")
     )
     if (input$hypothesis == 0) {
-      radioGroupButtons("plots", "", choices = c(h0[1]), selected = h0[1], status = "success", size = "xs")
+      hyp <- radioGroupButtons("plots", "", choices = c(h0[1]), selected = h0[1], status = "success", size = "xs")
     } else if (input$hypothesis == 1) {
-      radioGroupButtons("plots", "", choices = c(h1[1], h1[2]), selected = h1[1], status = "success", size = "xs")
+      hyp <- radioGroupButtons("plots", "", choices = c(h1[1], h1[2]), selected = h1[1], status = "success", size = "xs")
     } else {
-      radioGroupButtons("plots", "", choices = c(h2[1], h2[2], h2[3]), selected = h2[1], status = "success", size = "xs")
-      
+      hyp <- radioGroupButtons("plots", "", choices = c(h2[1], h2[2], h2[3]), selected = h2[1], status = "success", size = "xs")
     }
+    list(hyp,
+         plotlyOutput("beetles"))
   })
   
   xvar <- reactive({
@@ -177,10 +182,11 @@ shinyServer <- function(input, output, session) {
              yaxis = list(title = names(ytitle)[which(ytitle %in% input$dependent)]))
     
     
-    if (input$trend) {
-      fit <- lm(yvar~xvar)
+
+    fit <- lm(yvar~xvar)
+    if (dim(summary(fit)$coefficients) > 1) {
       linetype <- ifelse(signif(summary(fit)$coefficients[2,4], digits = 2) < 0.05, "solid", "dash")
-      
+    
       p <- p %>% add_lines(y = ~fitted(fit), name = "Trendline", mode = "lines", line = list(color = "green", dash = linetype))
     }
     
@@ -190,24 +196,27 @@ shinyServer <- function(input, output, session) {
   output$stats <- renderText({
     validate(
       need(input$taxa, ""),
-      need(input$habitat, ""),
-      need(input$trend, "")
+      need(input$habitat, "")
     )
     df <- refilter()
     
     xvar <- df[, input$independent]
     yvar <- df[, input$dependent]
-    
+
     fit <- lm(yvar~xvar)
-    pval <- signif(summary(fit)$coefficients[2,4], digits = 2)
+
+
+    if (dim(summary(fit)$coefficients) > 1) {
+      pval <- signif(summary(fit)$coefficients[2,4], digits = 2)
     
-    if (!is.na(pval) & pval < 0.05) {
-      pval <- paste("<b style = 'color:red;'>", pval, "</b>")
+      if (!is.na(pval) & pval < 0.05) {
+        pval <- paste("<b style = 'color:red;'>", pval, "</b>")
+      }
+    
+      HTML("<b>Stats</b>",
+           "<br>p-value:", pval,
+           "<br>R<sup>2</sup>:", signif(summary(fit)$r.squared, digits = 2))
     }
-    
-    HTML("<b>Trend line analysis</b>",
-         "<br>p-value:", pval,
-         "<br>R<sup>2</sup>:", signif(summary(fit)$r.squared, digits = 2))
   })
   
 

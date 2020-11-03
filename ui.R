@@ -6,7 +6,13 @@ library(plotly)
 library(dplyr)
 
 Taxa <- c("All", "Amphibians" = "amph", "Crustaceans" = "crust", "Fish" = "fish", "Insects" = "insect", "Reptiles" = "rept")
-xtitle <- c("UTL (°C)" = "MaxCtmax", "LTL (°C)" = "MinCtmin", "Seasonality (°C)" = "Seasonality", "Latitude (°)" = "Latitude")
+
+xtitle <- c("Upper thermal limit (°C)" = "MaxCtmax", 
+            "Lower thermal limit (°C)" = "MinCtmin",
+            "Thermal tolerance range (°C)" = "TTR",
+            "Seasonality (°C)" = "Seasonality", 
+            "Latitude (°)" = "Latitude")
+
 ytitle <- c("Delta upper thermal limit (°C)" = "CtmaxARR", 
             "Delta lower thermal limit (°C)" = "CtminARR", 
             "Seasonality (°C)" = "Seasonality", 
@@ -31,7 +37,6 @@ shinyUI <- fluidPage(
   radioGroupButtons("hypothesis", "", choices = c("Assumption" = 0, "Latitudinal hypothesis" = 1, "Trade-off hypothesis"), selected = NA, status = "danger", size = "sm"),
       
   uiOutput("plotOptions"),
-  plotlyOutput("beetles"),
   htmlOutput("beetlestats"),
   #   )
   # ),
@@ -48,7 +53,7 @@ shinyUI <- fluidPage(
       pickerInput("dependent", "Dependent variable", choices = ytitle, 
                   options = list(style = "btn-success")),
       br(),
-      materialSwitch("trend", "Trend line", value = TRUE, status = "danger"),
+      #materialSwitch("trend", "Trend line", value = TRUE, status = "danger"),
       width = 3
     ),
     
@@ -65,7 +70,6 @@ shinyUI <- fluidPage(
     )
   ),
   
-  hr(),
-  includeHTML("section3.html")
+  hr()
   
 )
