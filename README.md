@@ -1,8 +1,8 @@
 # RShiny_PlasticityTradeoff
 
-PlasticityTradeoff is an interactive shiny app that allows any user to visualize the relationship between plasticity and thermal tolerance range across many taxa. The app uses the data colleted by [Calosi (2015)](https://royalsocietypublishing.org/doi/10.1098/rsbl.2007.0408) on beetles and a larger dataset published by [Gunderson & Stillman (2015)](https://royalsocietypublishing.org/doi/full/10.1098/rspb.2015.0401)
+PlasticityTradeoff is an interactive shiny app that allows any user to visualize the relationship between plasticity and thermal tolerance range of organisms across many taxa. The app uses the data colleted by [Calosi (2015)](https://royalsocietypublishing.org/doi/10.1098/rsbl.2007.0408) on beetles and a larger dataset published by [Gunderson & Stillman (2015)](https://royalsocietypublishing.org/doi/full/10.1098/rspb.2015.0401)
 
-## Prerequisites for opening in Rstudio (for editing)
+## Prerequisites for opening in Rstudio
 Git and Rstudio ([Instructions](https://resources.github.com/whitepapers/github-and-rstudio/))  
 Installation of the following R packages:
 shiny, shinythemes, shinyWidgets, magrittr, plotly, dplyr
@@ -25,6 +25,7 @@ Paste the repository URL and click ```Create Project```.
 
 * Alternatively, go to [this link](https://huckley.shinyapps.io/RShiny_PlasticityTradeoff/).
 
+We have a google doc with questions to guide through the app for further understanding of the topic.
 
 ## Contributing to PlasticityTradeoff
 <!--- If your README is long or you have some specific process or steps you want contributors to follow, consider creating a separate CONTRIBUTING.md file--->
