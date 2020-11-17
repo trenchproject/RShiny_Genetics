@@ -5,11 +5,25 @@ library(magrittr)
 library(plotly)
 library(dplyr)
 
+
+pkgs <- c("shiny", "shinythemes", "shinyWidgets", "magrittr", "plotly", "dplyr", "asd")
+lapply(pkgs, library, character.only = TRUE)
+
+lapply(pkgs, FUN = function(x) {
+    if (!require(x, character.only = TRUE)) {
+      install.packages(x, dependencies = TRUE)
+    }
+  }
+)
+
+
+
 Taxa <- c("All", "Amphibians" = "amph", "Crustaceans" = "crust", "Fish" = "fish", "Insects" = "insect", "Reptiles" = "rept")
 
 xtitle <- c("Upper thermal limit (°C)" = "MaxCtmax", 
             "Lower thermal limit (°C)" = "MinCtmin",
             "Thermal tolerance range (°C)" = "TTR",
+            "Delta upper thermal limit (°C)" = "CtmaxARR",
             "Seasonality (°C)" = "Seasonality", 
             "Latitude (°)" = "Latitude")
 
@@ -24,7 +38,7 @@ shinyUI <- fluidPage(
   theme = shinytheme("united"),
   setBackgroundColor(color = "#F5F5F5"), 
   title = "Plasticity trade-off",
-  titlePanel("Trade-off between thermal tolerance and plasticity"),
+  titlePanel("Does evolving tolerance of hot temperatures limit acclimation capacity?"),
   hr(),
   includeHTML("intro.html"),
   

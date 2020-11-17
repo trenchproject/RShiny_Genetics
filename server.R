@@ -23,6 +23,7 @@ habitats <- c("t" = "Terrestrial", "sw" = "Marine", "fw" = "Freshwater")
 xtitle <- c("Upper thermal limit (°C)" = "MaxCtmax", 
             "Lower thermal limit (°C)" = "MinCtmin",
             "Thermal tolerance range (°C)" = "TTR",
+            "Delta upper thermal limit (°C)" = "CtmaxARR",
             "Seasonality (°C)" = "Seasonality", 
             "Latitude (°)" = "Latitude")
 
@@ -181,9 +182,8 @@ shinyServer <- function(input, output, session) {
       layout(xaxis = list(title = names(xtitle)[which(xtitle %in% input$independent)]),
              yaxis = list(title = names(ytitle)[which(ytitle %in% input$dependent)]))
     
-    
-
     fit <- lm(yvar~xvar)
+    
     if (dim(summary(fit)$coefficients) > 1) {
       linetype <- ifelse(signif(summary(fit)$coefficients[2,4], digits = 2) < 0.05, "solid", "dash")
     
