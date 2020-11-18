@@ -8,6 +8,8 @@
 # df <- df %>% as.data.frame()
 # write.csv(df, "Gunderson&Stillman_data.csv")
 
+source("cicerone.R", local = T)
+
 data <- read.csv("Gunderson&Stillman_data.csv")
 
 data$Latitude <- abs(data$Latitude)
@@ -18,6 +20,8 @@ beetles$MeanUTL <- (beetles$UTL14.5 + beetles$UTL20.5) / 2
 beetles$MeanLTL <- (beetles$LTL14.5 + beetles$LTL20.5) / 2
 
 beetles <- beetles[-1, ]
+
+Taxa <- c("All", "Amphibians" = "amph", "Crustaceans" = "crust", "Fish" = "fish", "Insects" = "insect", "Reptiles" = "rept")
 habitats <- c("t" = "Terrestrial", "sw" = "Marine", "fw" = "Freshwater")
 
 xtitle <- c("Upper thermal limit (°C)" = "MaxCtmax", 
@@ -51,9 +55,12 @@ h0 <- c("TTR vs LRCP", "Mean UTL vs LRCP")
 h1 <- c(HTML("&Delta;UTL vs LRCP"), HTML("&Delta;LTL vs LRCP"))
 h2 <- c(HTML("&Delta;UTL vs TTR"), HTML("&Delta;UTL vs mean UTL"), HTML("&Delta;LTL vs mean LTL"))
 
+
 shinyServer <- function(input, output, session) {
   
-
+  observeEvent(input$tour1, guide1$init()$start())
+  observeEvent(input$tour2, guide2$init()$start())
+  
   output$plotOptions <- renderUI({
     validate(
       need(input$hypothesis, "")
@@ -65,7 +72,7 @@ shinyServer <- function(input, output, session) {
     } else {
       hyp <- radioGroupButtons("plots", "", choices = c(h2[1], h2[2], h2[3]), selected = h2[1], status = "success", size = "xs")
     }
-    list(hyp,
+    list(div(id = "hyp-wrapper", hyp),
          plotlyOutput("beetles"))
   })
   
@@ -152,7 +159,7 @@ shinyServer <- function(input, output, session) {
     if (input$taxa != "All") {
       data <- dplyr::filter(data, Group %in% input$taxa)
     }
-    data[, c(input$independent ,"Habitat", input$dependent)] %>% 
+    data[, c("Group", input$independent ,"Habitat", input$dependent)] %>% 
       na.omit()
   })
   
@@ -167,7 +174,7 @@ shinyServer <- function(input, output, session) {
     dplyr::filter(filter(), Habitat %in% names(habitats)[which(habitats %in% input$habitat)])
   })
   
-  output$plot1 <- renderPlotly({
+  output$plot <- renderPlotly({
     validate(
       need(input$taxa, "Select taxa"),
       need(input$habitat, "Select habitat")
@@ -178,7 +185,12 @@ shinyServer <- function(input, output, session) {
     
         
     p <- plot_ly(x = ~xvar) %>%
-      add_trace(y = ~yvar, name = "Data points", type = "scatter", mode = "markers") %>%
+      add_trace(y = ~yvar, 
+                name = "Data points", 
+                type = "scatter", 
+                mode = "markers",
+                text = paste0("Taxa: ", names(Taxa[which(Taxa %in% df[, "Group"])]), "<br>Habitat: ", habitats[df[, "Habitat"]], "<br>"),
+                hovertemplate = "%{text} (%{x}, %{y})") %>%
       layout(xaxis = list(title = names(xtitle)[which(xtitle %in% input$independent)]),
              yaxis = list(title = names(ytitle)[which(ytitle %in% input$dependent)]))
     
