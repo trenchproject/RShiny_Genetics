@@ -8,13 +8,14 @@ guide1 <- Cicerone$
   step(
     el = "plotOptions",
     title = "Plot",
-    description = "A plot just popped up! "
+    description = HTML("A plot just popped up!<br> 
+                       Are the data consistent with the presumptions made by the hypotheses?")
   )$
-  step(
-    el = "hyp-wrapper",
-    title = "Options",
-    description = "Here, you can select what relationship to plot. Now, we only have the option to plot TTR vs LRCP so ."
-  )$
+  # step(
+  #   el = "plots",
+  #   title = "Options",
+  #   description = "Here, you can select what relationship to plot. Now, we only have the option to plot TTR vs LRCP so ."
+  # )$
   step(
     el = "beetlestats",
     title = "Stats",

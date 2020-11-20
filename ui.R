@@ -42,38 +42,31 @@ shinyUI <- fluidPage(
   titlePanel("Does evolving tolerance of hot temperatures limit acclimation capacity?"),
   hr(),
   includeHTML("intro.html"),
+  br(),
   actionBttn(
     inputId = "tour1",
     label = "Take a tour!", 
     style = "material-flat",
     color = "success",
     size = "sm"
-  ),  
+  ),
+  hr(),
   
-  # sidebarLayout(
-  #   sidebarPanel(
-  #     checkboxGroupButtons("hypothesis", "Hypothesis", choices = c("Hypothesis 1", "Hypothesis 2"))
-  #   ),
-  #   
-  #   mainPanel(
-  
-
   radioGroupButtons("hypothesis", "", choices = c("Assumption" = 0, "Latitudinal hypothesis" = 1, "Trade-off hypothesis"), selected = NA, status = "danger", size = "sm"),
   uiOutput("plotOptions"),
   htmlOutput("beetlestats"),
-  #   )
-  # ),
 
-  br(), br(), br(),
+  br(), br(),
   includeHTML("section2.html"),
+  br(),
   actionBttn(
     inputId = "tour2",
     label = "Take a tour!", 
     style = "material-flat",
     color = "success",
     size = "sm"
-  ),  
-  br(),
+  ),
+  hr(),
   div(
     id = "Gunderson-wrapper",
     sidebarLayout(

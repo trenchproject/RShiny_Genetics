@@ -72,7 +72,7 @@ shinyServer <- function(input, output, session) {
     } else {
       hyp <- radioGroupButtons("plots", "", choices = c(h2[1], h2[2], h2[3]), selected = h2[1], status = "success", size = "xs")
     }
-    list(div(id = "hyp-wrapper", hyp),
+    list(hyp,
          plotlyOutput("beetles"))
   })
   
