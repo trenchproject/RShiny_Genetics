@@ -6,7 +6,8 @@ library(plotly)
 library(dplyr)
 library(cicerone)
 #library(asd)
-
+library(shinyjs)
+library(shinyBS)
 
 # pkgs <- c("shiny", "shinythemes", "shinyWidgets", "magrittr", "plotly", "dplyr", "cicerone)
 # lapply(pkgs, library, character.only = TRUE)
@@ -36,6 +37,7 @@ ytitle <- c("Delta upper thermal limit (°C)" = "CtmaxARR",
 
 shinyUI <- fluidPage(
   use_cicerone(),
+  useShinyjs(),
   theme = shinytheme("united"),
   setBackgroundColor(color = "#F5F5F5"), 
   title = "Plasticity trade-off",
@@ -43,6 +45,7 @@ shinyUI <- fluidPage(
   hr(),
   includeHTML("intro.html"),
   br(),
+
   actionBttn(
     inputId = "tour1",
     label = "Take a tour!", 
@@ -52,13 +55,22 @@ shinyUI <- fluidPage(
   ),
   hr(),
   
-  radioGroupButtons("hypothesis", "", choices = c("Assumption" = 0, "Latitudinal hypothesis" = 1, "Trade-off hypothesis"), selected = NA, status = "danger", size = "sm"),
+  radioGroupButtons("hypothesis", "", choices = c("Assumption" = 0, "Latitudinal hypothesis" = 1, "Trade-off hypothesis" = 2), selected = NA, status = "danger", size = "sm"),
   uiOutput("plotOptions"),
   htmlOutput("beetlestats"),
 
   br(), br(),
   includeHTML("section2.html"),
   br(),
+  actionBttn(
+    inputId = "reset2",
+    label = "Reset", 
+    style = "material-flat",
+    color = "danger",
+    size = "xs"
+  ),
+  bsTooltip("reset2", "If you have already changed the variables, reset them to default here before starting the tour."),
+  
   actionBttn(
     inputId = "tour2",
     label = "Take a tour!", 

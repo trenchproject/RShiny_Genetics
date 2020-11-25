@@ -19,7 +19,7 @@ guide1 <- Cicerone$
   step(
     el = "beetlestats",
     title = "Stats",
-    description = HTML("Here shows the stats. Notice that the p-value is colored red since it is less than 0.05, and the trend is significant.
+    description = HTML("Here shows the stats. Notice that the p-value is colored red since it is less than 0.05, which conveys that the trend is significant.
                        The R<sup>2</sup> value tells us that 35% of the variation in thermal tolerance range is explained by the variation in the latitudinal range center point.")
   )$
   step(
@@ -58,7 +58,7 @@ guide2 <- Cicerone$
   step(
     el = "independent-wrapper",
     title = "Independent variable",
-    description = "Open the list and select <b>Latitude</b>."
+    description = "Open the list, select <b>Latitude</b>, and then go next."
   )$
   step(
     el = "dependent-wrapper",

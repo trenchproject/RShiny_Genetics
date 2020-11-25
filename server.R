@@ -60,6 +60,10 @@ shinyServer <- function(input, output, session) {
   
   observeEvent(input$tour1, guide1$init()$start())
   observeEvent(input$tour2, guide2$init()$start())
+
+  observeEvent(input$reset2, {
+    reset("Gunderson-wrapper")
+  })
   
   output$plotOptions <- renderUI({
     validate(
@@ -78,6 +82,7 @@ shinyServer <- function(input, output, session) {
   
   xvar <- reactive({
     validate(
+      need(input$hypothesis, ""),
       need(input$plots, "")
     )
     if (input$hypothesis == 0) {
