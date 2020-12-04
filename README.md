@@ -5,10 +5,10 @@ PlasticityTradeoff is an interactive shiny app that allows any user to visualize
 ## Prerequisites for opening in Rstudio
 Git and Rstudio ([Instructions](https://resources.github.com/whitepapers/github-and-rstudio/))  
 Installation of the following R packages:
-shiny, shinythemes, shinyWidgets, magrittr, plotly, dplyr
+shiny, shinythemes, shinyWidgets, magrittr, plotly, dplyr, cicerone, shinyjs, shinyBS
 
 ```
-pkgs <- c("shiny", "shinythemes", "shinyWidgets", "magrittr", "plotly", "dplyr")
+pkgs <- c("shiny", "shinythemes", "shinyWidgets", "magrittr", "plotly", "dplyr", "cicerone", "shinyjs", "shinyBS")
 lapply(pkgs, FUN = function(x) {
     if (!require(x, character.only = TRUE)) {
       install.packages(x, dependencies = TRUE)

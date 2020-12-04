@@ -5,7 +5,6 @@ library(magrittr)
 library(plotly)
 library(dplyr)
 library(cicerone)
-#library(asd)
 library(shinyjs)
 library(shinyBS)
 

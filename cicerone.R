@@ -3,7 +3,7 @@ guide1 <- Cicerone$
   step(
     el = "hypothesis",
     title = "Data from Calosi",
-    description = HTML("Test the hypotheses using the data on beetles. Click on <b>Assumption</b> if not yet done so.")
+    description = HTML("Test the hypotheses using the data on beetles. Click on <b>Assumption</b>. Then hit next.")
   )$
   step(
     el = "plotOptions",
@@ -25,7 +25,8 @@ guide1 <- Cicerone$
   step(
     el = "hypothesis",
     title = "Testing the hypotheses",
-    description = HTML("Now that the assumption is met, we can check if there is evidence that supports either hypothesis!")
+    description = HTML("Now that the assumption is met, we can check if there is evidence that supports either hypothesis.
+                       Each tab contains plots that are useful to determine if the hypothesis is supported.")
   )
 
 
@@ -45,7 +46,7 @@ guide2 <- Cicerone$
   step(
     el = "habitatInput",
     title = "Selecting habitat",
-    description = "If you want organisms from specific habitat, here is where you select them.",
+    description = "If you want organisms from specific habitats, here is where you select them.",
     position = "top"
   )$
   step(
