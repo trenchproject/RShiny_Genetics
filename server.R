@@ -201,7 +201,7 @@ shinyServer <- function(input, output, session) {
     
     fit <- lm(yvar~xvar)
     
-    if (dim(summary(fit)$coefficients) > 1) {
+    if (nrow(summary(fit)$coefficients) > 1) {
       linetype <- ifelse(signif(summary(fit)$coefficients[2,4], digits = 2) < 0.05, "solid", "dash")
     
       p <- p %>% add_lines(y = ~fitted(fit), name = "Trendline", mode = "lines", line = list(color = "green", dash = linetype))
@@ -223,7 +223,7 @@ shinyServer <- function(input, output, session) {
     fit <- lm(yvar~xvar)
 
 
-    if (dim(summary(fit)$coefficients) > 1) {
+    if (nrow(summary(fit)$coefficients) > 1) {
       pval <- signif(summary(fit)$coefficients[2,4], digits = 2)
     
       if (!is.na(pval) & pval < 0.05) {

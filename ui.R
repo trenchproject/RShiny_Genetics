@@ -38,9 +38,12 @@ shinyUI <- fluidPage(
   use_cicerone(),
   useShinyjs(),
   theme = shinytheme("united"),
-  setBackgroundColor(color = "#F5F5F5"), 
+  setBackgroundColor(color = "#C7DAE0"),
+  titlePanel(
+    div(tags$img(src="TrenchEdLogo.png", height = 150), 
+        "Heat Tolerance vs Acclimation Capacity?")
+  ),
   title = "Plasticity trade-off",
-  titlePanel("Does evolving tolerance of hot temperatures limit acclimation capacity?"),
   hr(),
   includeHTML("intro.html"),
   br(),
